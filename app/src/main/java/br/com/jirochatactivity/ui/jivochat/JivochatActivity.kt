@@ -42,7 +42,6 @@ class JivochatActivity : AppCompatActivity(), JivoDelegate{
                 }
             }
         }
-
     }
 
     private fun setup() {
