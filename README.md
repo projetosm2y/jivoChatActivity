@@ -1,6 +1,6 @@
 # Mobile2You - Jivochat Activity
 ![Maven Central](https://img.shields.io/jitpack/v/github/projetosm2y/jivoChatActivity)
- 
+
 ## Objetivo
 Jivochat Activity é uma biblioteca que permite facilitar a instalação do sdk do Jivochat. Este é um serviço de chats, que disponibiliza um site facilmente configurável para cada projeto. Leia mais, no [site](https://www.jivochat.com.br) 
 ## Configuração da biblioteca
@@ -69,7 +69,7 @@ enum class JivochatLanguage(val label: String) {
 
 Dentro de cada arquivo **index_.html** há um script com um objeto no formato padrão de objetos do Javascript (JSON), com os seguintes parâmetros:
 
-```json
+```javascript
         jivo_config = {
             "plane_color":"yellow", //cor do botão de enivar
 
