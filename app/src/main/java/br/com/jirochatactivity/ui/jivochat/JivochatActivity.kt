@@ -6,6 +6,7 @@ import android.net.Uri
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import br.com.jirochatactivity.R
+import br.com.jirochatactivity.ui.models.toJivochatEvent
 import br.com.jirochatactivity.utils.Constants
 import br.com.jivosite.sdk.JivoDelegate
 import br.com.jivosite.sdk.JivoSdk
@@ -25,12 +26,13 @@ class JivochatActivity : AppCompatActivity(), JivoDelegate{
         setup()
     }
 
+
+    /**
+     * It is called in some events that occur in the
+     * chat web page.
+     * */
     override fun onEvent(name: String?, data: String?) {
-        jivochatSetup.onEvent(name, data)
-        /*
-        * opens device browser when user clicks in a url
-        * using the chat
-        * */
+        jivochatSetup.onEvent(name?.toJivochatEvent(), data)
         name?.let {
             when(it) {
                 "url.click" -> {
@@ -44,7 +46,7 @@ class JivochatActivity : AppCompatActivity(), JivoDelegate{
     }
 
     private fun setup() {
-        jivoSdk = JivoSdk(jivoChatWebView, jivochatSetup.language)
+        jivoSdk = JivoSdk(jivoChatWebView, jivochatSetup.language.label)
         jivoSdk.delegate = this
         jivoSdk.prepare()
     }
