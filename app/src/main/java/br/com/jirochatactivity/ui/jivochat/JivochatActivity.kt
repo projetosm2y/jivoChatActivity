@@ -47,6 +47,7 @@ class JivochatActivity : AppCompatActivity(), JivoDelegate{
     private fun getExtras() {
         setup = intent.getSerializableExtra(Constants.EXTRA_JIVOCHAT_SETUP) as JivochatSetup
         jivoSdk = JivoSdk(jivoChatWebView, setup.language)
+        jivoSdk.delegate = this
     }
 }
 
