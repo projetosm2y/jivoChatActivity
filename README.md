@@ -111,11 +111,11 @@ Para se utilizar a activity, deve-se chamar a função que já cria a *intent* d
 *JivochatActivity* passando um objeto que sobrescreva as informações da classe. Veja abaixo:
 
 ``` kotlin
-val setup = object : JivochatSetup() {
-            override var language: String = "en"
+        val setup = object : JivochatSetup() {
+            override var language: JivochatLanguage = JivochatLanguage.PT
 
-            override fun onEvent(name: String?, data: String?){
-              // tratamento que precisar
+            override fun onEvent(name: JivochatEvent?, data: String?){
+                // tratamento para cada tipo de evento
             }
         }
 ```
