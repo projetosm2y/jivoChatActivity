@@ -13,25 +13,24 @@ import kotlinx.android.synthetic.main.activity_jivochat.*
 import org.jetbrains.anko.intentFor
 
 class JivochatActivity : AppCompatActivity(), JivoDelegate{
-//    private val jivoSdk: JivoSdk by lazy {
-//        val sdk = JivoSdk(jivoChatWebView, "pt")
-//        sdk.delegate = this
-//        sdk
-//    }
-
     private lateinit var jivoSdk: JivoSdk
 
-    private lateinit var setup: JivochatSetup
+    private val jivochatSetup: JivochatSetup by lazy {
+        intent.getSerializableExtra(Constants.EXTRA_JIVOCHAT_SETUP) as JivochatSetup
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_jivochat)
-        getExtras()
-        jivoSdk.prepare()
+        setup()
     }
 
     override fun onEvent(name: String?, data: String?) {
-        setup.onEvent(name, data)
+        jivochatSetup.onEvent(name, data)
+        /*
+        * opens device browser when user clicks in a url
+        * using the chat
+        * */
         name?.let {
             when(it) {
                 "url.click" -> {
@@ -44,14 +43,14 @@ class JivochatActivity : AppCompatActivity(), JivoDelegate{
 
     }
 
-    private fun getExtras() {
-        setup = intent.getSerializableExtra(Constants.EXTRA_JIVOCHAT_SETUP) as JivochatSetup
-        jivoSdk = JivoSdk(jivoChatWebView, setup.language)
+    private fun setup() {
+        jivoSdk = JivoSdk(jivoChatWebView, jivochatSetup.language)
         jivoSdk.delegate = this
+        jivoSdk.prepare()
     }
 }
 
-fun Context.createJivochatActivityIntent(jivochatSetup: JivochatSetup? = null) =
+fun Context.createJivochatActivityIntent(jivochatSetup: JivochatSetup = JivochatSetup()) =
     intentFor<JivochatActivity>(
         Constants.EXTRA_JIVOCHAT_SETUP to jivochatSetup
     )
